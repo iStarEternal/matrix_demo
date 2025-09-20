@@ -35,7 +35,7 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
   void initState() {
     super.initState();
 
-    B = XDrawBoxUtils.getRotatedPoints(B, XRotationUtils.degreeToRadian(-50));
+    B = XDrawBoxUtils.rotatePoints(B, XRotationUtils.degreeToRadian(-50));
   }
 
   @override

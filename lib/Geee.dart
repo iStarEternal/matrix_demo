@@ -16,26 +16,26 @@ class XRotationUtils {
     return degree * pi / 180;
   }
 
-  /// 获取 AB 的角度
-  static double getRotationDegree(Offset pointA, Offset pointB) {
+  /// 获取点 A 到点 B 的方向角（弧度）
+  static double angleBetweenPoints(Offset pointA, Offset pointB) {
     final dx = pointB.dx - pointA.dx;
     final dy = pointB.dy - pointA.dy;
-    final radians = atan2(dy, dx);
-    return radians * 180 / pi; // 转为度数
+    return atan2(dy, dx);
   }
 
-  static double getRotation(Offset pointA, Offset pointB) {
-    final dx = pointB.dx - pointA.dx;
-    final dy = pointB.dy - pointA.dy;
-    return atan2(dy, dx); // 弧度
+  /// 获取点 A 到点 B 的方向角（角度）
+  static double angleBetweenPointsDegree(Offset pointA, Offset pointB) {
+    return radianToDegree(angleBetweenPoints(pointA, pointB));
   }
 }
 
 class XDrawBoxUtils {
   XDrawBoxUtils._();
 
-  /// 获取一个包围盒子，points = [topLeft, topRight, bottomRight, bottomLeft]
-  static List<Offset> getPointsDrawBox(List<Offset> points) {
+  /// 根据四个点计算轴对齐的包围盒
+  /// points = [topLeft, topRight, bottomRight, bottomLeft]
+  /// 返回 [topLeft, topRight, bottomRight, bottomLeft] 四个点
+  static List<Offset> getAxisAlignedBox(List<Offset> points) {
     if (points.length != 4) return [];
 
     final topLeft = points[0];
@@ -43,8 +43,8 @@ class XDrawBoxUtils {
     final bottomRight = points[2];
     final bottomLeft = points[3];
 
-    // 上边角度
-    final angle = XRotationUtils.getRotation(topLeft, topRight);
+    // 上边线角度
+    final angle = XRotationUtils.angleBetweenPoints(topLeft, topRight);
 
     final cosA = cos(-angle);
     final sinA = sin(-angle);
@@ -61,11 +61,11 @@ class XDrawBoxUtils {
     final rBottomRight = rotateToHorizontal(bottomRight);
     final rBottomLeft = rotateToHorizontal(bottomLeft);
 
-    // 水平轴对齐的矩形
-    final minX = [rTopLeft.dx, rBottomLeft.dx].reduce((a, b) => a < b ? a : b);
-    final maxX = [rTopRight.dx, rBottomRight.dx].reduce((a, b) => a > b ? a : b);
-    final minY = [rTopLeft.dy, rTopRight.dy].reduce((a, b) => a < b ? a : b);
-    final maxY = [rBottomLeft.dy, rBottomRight.dy].reduce((a, b) => a > b ? a : b);
+    // 水平轴对齐的矩形边界
+    final minX = [rTopLeft.dx, rBottomLeft.dx].reduce(min);
+    final maxX = [rTopRight.dx, rBottomRight.dx].reduce(max);
+    final minY = [rTopLeft.dy, rTopRight.dy].reduce(min);
+    final maxY = [rBottomLeft.dy, rBottomRight.dy].reduce(max);
 
     // 旋转回原角度
     final cosB = cos(angle);
@@ -85,26 +85,26 @@ class XDrawBoxUtils {
     ];
   }
 
-  /// 传入4个点和旋转角度(弧度)，返回旋转后的4个点
-  static List<Offset> getRotatedPoints(List<Offset> points, double angle, {Offset? center}) {
-    if (points.length != 4) return [];
+  /// 将四个点绕指定中心旋转指定角度
+  /// angle: 弧度
+  /// center: 可选旋转中心，默认使用四点中心
+  static List<Offset> rotatePoints(List<Offset> points, double angle, {Offset? center}) {
+    if (points.isEmpty) return [];
 
-    // 计算旋转中心，如果没有传入，则取四点中心
     final cx = center?.dx ?? points.map((p) => p.dx).reduce((a, b) => a + b) / points.length;
     final cy = center?.dy ?? points.map((p) => p.dy).reduce((a, b) => a + b) / points.length;
 
-    final rotatedPoints = points.map((p) {
+    return points.map((p) {
       final dx = p.dx - cx;
       final dy = p.dy - cy;
       final rx = dx * cos(angle) - dy * sin(angle) + cx;
       final ry = dx * sin(angle) + dy * cos(angle) + cy;
       return Offset(rx, ry);
     }).toList();
-
-    return rotatedPoints;
   }
 
-  Rectangle<double> getRectDrawBox(List<Offset> points) {
+  /// 根据点列表生成包围盒 Rectangle
+  static Rectangle<double> getBoundingRect(List<Offset> points) {
     if (points.isEmpty) return Rectangle(0, 0, 0, 0);
 
     double minX = points[0].dx;

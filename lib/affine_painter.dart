@@ -90,7 +90,7 @@ class AffinePainter extends CustomPainter {
 
   /// B 点包围盒路径
   Path _makeBDrawBox() {
-    final points = XDrawBoxUtils.getPointsDrawBox(B); // 返回四个 Offset: [topLeft, topRight, bottomRight, bottomLeft]
+    final points = XDrawBoxUtils.getAxisAlignedBox(B); // 返回四个 Offset: [topLeft, topRight, bottomRight, bottomLeft]
     if (points.isEmpty) return Path();
 
     final path = Path();

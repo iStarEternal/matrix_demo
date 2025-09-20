@@ -53,7 +53,7 @@ String matrix4ToString(vm.Matrix4 m) {
 String logText(List<Offset> A, List<Offset> B) {
   final H = XMatrixUtils.getMatrix4(A, B);
 
-  final rotation_0_1 = XRotationUtils.getRotationDegree(B[0], B[1]);
+  final rotation_0_1 = XRotationUtils.angleBetweenPointsDegree(B[0], B[1]);
 
   // 获取四种分解
   final affine = XMatrixUtils.decomposeAffine(H);
