@@ -3,6 +3,8 @@ import 'dart:ui';
 
 import 'package:vector_math/vector_math_64.dart' as vm;
 
+// 参考：https://franklinta.com/2014/09/08/computing-css-matrix3d-transforms/
+
 class XMatrixUtils {
   /// 仿射变化，通过from4Point，和to4Points，得到矩阵
   static vm.Matrix4 getMatrix4(List<Offset> from, List<Offset> to) {

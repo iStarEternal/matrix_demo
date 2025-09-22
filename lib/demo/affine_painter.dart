@@ -53,7 +53,7 @@ class AffinePainter extends CustomPainter {
     final path = Path();
 
     // 1. 外框矩形
-    final rect = quad.toOuterRect();
+    final rect = quad.outerRect();
     path.addRect(rect);
 
     // 2. 五星红旗里的五颗星

@@ -83,7 +83,7 @@ class PathMaker {
 
   /// 使用 XBoundsUtils 计算包围盒并转 Path
   static Path makeBoundingBox_aabb(XQuad quad) {
-    final outerRect = quad.toOuterRect();
+    final outerRect = quad.outerRect();
     final outerQuad = XQuad.fromRect(outerRect);
     return makeBoxPath(outerQuad.toOffsets());
   }

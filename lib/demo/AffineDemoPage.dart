@@ -44,8 +44,8 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final rect = quadB.toOuterRect();
-    final center = quadB.getCenter().toOffset();
+    final rect = quadB.outerRect();
+    final center = quadB.center().toOffset();
     final handleSize = 28.0;
 
     return Scaffold(
@@ -135,7 +135,7 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
         final currentAngle = _calculateAngle(center, details.globalPosition);
         final delta = currentAngle - _lastRotationAngle;
         setState(() {
-          quadB = quadB.rotate(quadB.getCenter(), delta);
+          quadB = quadB.rotate(quadB.center(), delta);
         });
         _lastRotationAngle = currentAngle;
       },
