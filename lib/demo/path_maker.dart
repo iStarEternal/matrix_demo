@@ -48,19 +48,19 @@ class PathMaker {
     final W = rect.height;
 
     // 大星
-    final bigCenter = Offset(rect.left + 0.1 * L, rect.top + 0.3 * W);
-    final bigRadius = 0.05 * L;
+    final bigCenter = Offset(rect.left + 0.15 * L, rect.top + 0.3 * W);
+    final bigRadius = 0.06 * L;
     path.addPath(makeStarPath(center: bigCenter, radius: bigRadius), Offset.zero);
 
     // 小星公共半径
-    final smallRadius = 0.03 * L;
+    final smallRadius = 0.02 * L;
 
     // 小星坐标（相对左上角）
     final smallCenters = [
-      Offset(0.20 * L, 0.15 * W),
-      Offset(0.24 * L, 0.25 * W),
-      Offset(0.24 * L, 0.40 * W),
-      Offset(0.20 * L, 0.50 * W),
+      Offset(0.25 * L, 0.15 * W),
+      Offset(0.30 * L, 0.25 * W),
+      Offset(0.30 * L, 0.40 * W),
+      Offset(0.25 * L, 0.50 * W),
     ].map((o) => Offset(rect.left + o.dx, rect.top + o.dy)).toList();
 
     // 每颗小星的旋转方向：指向大星
