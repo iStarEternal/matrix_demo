@@ -2,43 +2,11 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart' as vm;
+import 'package:matrix_demo/x_matrix/dep/x_matrix_utils_v2.dart';
 
-import 'Geee.dart';
-import 'XMatrixUtils2D.dart';
-import 'matrix_utils.dart';
-
-void printAllDecompose(vm.Matrix4 H) {
-  final affine = XMatrixUtils.decomposeAffine(H);
-  final qr = XMatrixUtils.qrDecomposition2D(H);
-  final svd = XMatrixUtils.svdDecomposition2D(H);
-  final full = XMatrixUtils.decomposeFull(H);
-
-  print('===== 分解结果 =====');
-
-  print('decomposeAffine:');
-  print('  rotation = ${(affine['rotation'] as double) * 180 / pi}°');
-  print('  translation = ${affine['translation']}');
-  print('  scale = ${affine['scale']}');
-  print('  skew = ${affine['skew']}');
-
-  print('qrDecomposition2D:');
-  print('  rotation = ${(qr['rotation'] as double) * 180 / pi}°');
-  print('  scale = ${qr['scale']}');
-  print('  shear = ${qr['shear']}');
-
-  print('svdDecomposition2D:');
-  print('  rotation = ${(svd['rotation'] as double) * 180 / pi}°');
-  print('  scale = ${svd['scale']}');
-
-  print('decomposeFull:');
-  print('  rotation = ${(full['rotation'] as double) * 180 / pi}°');
-  print('  scale = ${full['scale']}');
-  print('  skew = ${full['skew']}');
-  print('  translation = ${full['translation']}');
-  print('  perspective = ${full['perspective']}');
-
-  print('====================');
-}
+import 'x_geometry/x_geometry_utils.dart';
+import 'x_matrix/x_matrix_decomposition.dart';
+import 'x_matrix/x_matrix_utils.dart';
 
 /// 打印 Matrix4 的一行一行文本（返回 String）
 String matrix4ToString(vm.Matrix4 m) {
@@ -53,13 +21,7 @@ String matrix4ToString(vm.Matrix4 m) {
 String logText(List<Offset> A, List<Offset> B) {
   final H = XMatrixUtils.getMatrix4(A, B);
 
-  final rotation_0_1 = XRotationUtils.angleBetweenPointsDegree(B[0], B[1]);
-
-  // 获取四种分解
-  final affine = XMatrixUtils.decomposeAffine(H);
-  final qr = XMatrixUtils.qrDecomposition2D(H);
-  final svd = XMatrixUtils.svdDecomposition2D(H);
-  final full = XMatrixUtils.decomposeFull(H);
+  final rotation_0_1 = XGeometryUtils.angleBetweenPointsDegree(B[0], B[1]);
 
   // 构建显示文本
   final matrixText = StringBuffer();
@@ -80,8 +42,8 @@ String logText(List<Offset> A, List<Offset> B) {
   matrixText.writeln("矩阵 (H):");
   matrixText.writeln(matrix4ToString(H));
 
-  final sv1 = XMatrixUtils2D.decomposeQR(H);
-  final sv2 = XMatrixUtils2D.composeFromQR(sv1);
+  final sv1 = XMatrixDecomposition.decomposeQR(H);
+  final sv2 = XMatrixDecomposition.composeFromQR(sv1);
 
   matrixText.writeln("QR分解参数:");
   matrixText.writeln("  translationX = ${sv1.translationX}");
@@ -101,6 +63,12 @@ String logText(List<Offset> A, List<Offset> B) {
   matrixText.writeln("");
 
   matrixText.writeln("————————————————————————————————————");
+
+  // 获取四种分解
+  final affine = XMatrixUtils_v2.decomposeAffine(H);
+  final qr = XMatrixUtils_v2.qrDecomposition2D(H);
+  final svd = XMatrixUtils_v2.svdDecomposition2D(H);
+  final full = XMatrixUtils_v2.decomposeFull(H);
 
   matrixText.writeln("decomposeAffine:");
   matrixText.writeln("  translation = ${affine['translation']}");

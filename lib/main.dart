@@ -1,12 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:matrix_demo/XMatrixUtils2D.dart';
 import 'package:matrix_demo/debug_print.dart';
+import 'package:matrix_demo/x_quad/x_quad.dart';
 
-import 'Geee.dart';
+import 'TestConfig.dart';
 import 'affine_painter.dart';
-import 'matrix_utils.dart';
 
 void main() {
   runApp(const MaterialApp(home: Scaffold(body: AffineDemoPage())));
@@ -20,14 +17,9 @@ class AffineDemoPage extends StatefulWidget {
 }
 
 class _AffineDemoPageState extends State<AffineDemoPage> {
-  final List<Offset> A = [
-    const Offset(50, 100), const Offset(150, 100), const Offset(150, 200), const Offset(50, 200), //
-  ];
+  late XQuad quadA;
 
-  List<Offset> B = [
-    // const Offset(50, 100), const Offset(150, 100), const Offset(150, 200), const Offset(50, 200), //
-    const Offset(200, 200), const Offset(300, 200), const Offset(250, 300), const Offset(150, 300), //
-  ];
+  late XQuad quadB;
 
   final colors = [Colors.red, Colors.green, Colors.blue, Colors.orange];
 
@@ -35,57 +27,84 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
   void initState() {
     super.initState();
 
-    B = XDrawBoxUtils.rotatePoints(B, XRotationUtils.degreeToRadian(-50));
+    // B = XDrawBoxUtils.rotatePoints(B, XRotationUtils.degreeToRadian(-50));
+
+    resetQuads();
+  }
+
+  resetQuads() {
+    quadA = TestConfig.jsonToQuad(TestConfig.from);
+    quadB = TestConfig.jsonToQuad(TestConfig.to);
+    print(quadA);
+    print(quadB);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          right: 10,
-          top: 10,
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            width: 500,
-            color: Colors.white.withOpacity(0.7),
-            child: SingleChildScrollView(
-              child: Text(logText(A, B), style: const TextStyle(fontSize: 12, color: Colors.black)),
-            ),
-          ),
-        ),
-        CustomPaint(
-          size: MediaQuery.of(context).size,
-          painter: AffinePainter(A: A, B: B, colors: colors),
-        ),
-        for (int i = 0; i < B.length; i++)
-          Positioned(
-            left: B[i].dx - 12 / 2,
-            top: B[i].dy - 12 / 2,
-            child: GestureDetector(
-              onPanUpdate: (details) {
-                setState(() {
-                  B[i] = B[i] + details.delta;
-                });
-              },
+    final offsetsA = quadA.toOffsets();
+    final offsetsB = quadB.toOffsets();
+
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.all(16),
+      child: Container(
+        color: Colors.cyan.shade50,
+        child: Stack(
+          children: [
+            Positioned(
+              right: 10,
+              top: 10,
               child: Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(color: colors[i], shape: BoxShape.circle),
+                padding: const EdgeInsets.all(8),
+                width: 500,
+                color: Colors.white.withOpacity(0.7),
+                child: SingleChildScrollView(
+                  child: Text(logText(offsetsA, offsetsB), style: const TextStyle(fontSize: 12, color: Colors.black)),
+                ),
               ),
             ),
-          ),
-
-        ElevatedButton(
-          onPressed: () {
-            print("aaa");
-            B = A.toList();
-            setState(() {});
-          },
-          child: Text("重置"),
+            CustomPaint(
+              size: MediaQuery.of(context).size,
+              painter: AffinePainter(quadA: quadA, quadB: quadB, colors: colors),
+            ),
+            for (int i = 0; i < offsetsB.length; i++)
+              Positioned(
+                left: offsetsB[i].dx - 12 / 2,
+                top: offsetsB[i].dy - 12 / 2,
+                child: GestureDetector(
+                  onPanUpdate: (details) {
+                    setState(() {
+                      quadB.setPoint(i, quadB.toPoints()[i] + details.delta);
+                    });
+                  },
+                  child: Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(color: colors[i], shape: BoxShape.circle),
+                  ),
+                ),
+              ),
+            Positioned(
+              left: 16,
+              bottom: 16,
+              child: Row(
+                children: [
+                  resetWidgetA(),
+                  //
+                ],
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
+  resetWidgetA() {
+    return ElevatedButton(
+      onPressed: () {},
+      child: Text("重置"),
+      //
+    );
+  }
 }

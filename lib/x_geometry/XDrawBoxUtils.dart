@@ -1,33 +1,9 @@
 import 'dart:math';
 import 'dart:ui';
 
-class XRotationUtils {
-  XRotationUtils._();
+import 'package:matrix_demo/x_geometry/x_geometry_utils.dart';
 
-  /// 将弧度 (radian) 转换为角度 (degree)
-  /// 例如：弧度 π/2 转换为 90 度
-  static double radianToDegree(double radian) {
-    return radian * 180 / pi;
-  }
-
-  /// 将角度 (degree) 转换为弧度 (radian)
-  /// 例如：90 度 转换为 π/2 弧度
-  static double degreeToRadian(double degree) {
-    return degree * pi / 180;
-  }
-
-  /// 获取点 A 到点 B 的方向角（弧度）
-  static double angleBetweenPoints(Offset pointA, Offset pointB) {
-    final dx = pointB.dx - pointA.dx;
-    final dy = pointB.dy - pointA.dy;
-    return atan2(dy, dx);
-  }
-
-  /// 获取点 A 到点 B 的方向角（角度）
-  static double angleBetweenPointsDegree(Offset pointA, Offset pointB) {
-    return radianToDegree(angleBetweenPoints(pointA, pointB));
-  }
-}
+import '../x_quad/x_point.dart';
 
 class XDrawBoxUtils {
   XDrawBoxUtils._();
@@ -44,7 +20,7 @@ class XDrawBoxUtils {
     final bottomLeft = points[3];
 
     // 上边线角度
-    final angle = XRotationUtils.angleBetweenPoints(topLeft, topRight);
+    final angle = XGeometryUtils.angleBetweenPoints(topLeft, topRight);
 
     final cosA = cos(-angle);
     final sinA = sin(-angle);
@@ -88,18 +64,18 @@ class XDrawBoxUtils {
   /// 将四个点绕指定中心旋转指定角度
   /// angle: 弧度
   /// center: 可选旋转中心，默认使用四点中心
-  static List<Offset> rotatePoints(List<Offset> points, double angle, {Offset? center}) {
+  static List<XPoint> rotatePoints(List<XPoint> points, double angle, {XPoint? center}) {
     if (points.isEmpty) return [];
 
-    final cx = center?.dx ?? points.map((p) => p.dx).reduce((a, b) => a + b) / points.length;
-    final cy = center?.dy ?? points.map((p) => p.dy).reduce((a, b) => a + b) / points.length;
+    final cx = center?.x ?? points.map((p) => p.x).reduce((a, b) => a + b) / points.length;
+    final cy = center?.y ?? points.map((p) => p.y).reduce((a, b) => a + b) / points.length;
 
     return points.map((p) {
-      final dx = p.dx - cx;
-      final dy = p.dy - cy;
+      final dx = p.x - cx;
+      final dy = p.y - cy;
       final rx = dx * cos(angle) - dy * sin(angle) + cx;
       final ry = dx * sin(angle) + dy * cos(angle) + cy;
-      return Offset(rx, ry);
+      return XPoint(rx, ry);
     }).toList();
   }
 

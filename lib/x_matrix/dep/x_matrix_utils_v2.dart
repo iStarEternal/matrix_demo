@@ -4,8 +4,8 @@ import 'dart:ui';
 import 'package:vector_math/vector_math_64.dart' as vm;
 
 /// Flutter 版 XMatrixUtils
-class XMatrixUtils {
-  XMatrixUtils._();
+class XMatrixUtils_v2 {
+  XMatrixUtils_v2._();
 
   /// 透视矩阵 from 4 点到 4 点
   static vm.Matrix4 getMatrix4(List<Offset> from, List<Offset> to) {
