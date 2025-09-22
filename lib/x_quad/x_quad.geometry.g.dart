@@ -8,6 +8,12 @@ extension XQuadExtGeometry1 on XQuad {
     return XPoint(centerX, centerY);
   }
 
+  XPoint center() {
+    double centerX = (topLeft.x + bottomLeft.x + topRight.x + bottomRight.x) / 4;
+    double centerY = (topLeft.y + bottomLeft.y + topRight.y + bottomRight.y) / 4;
+    return XPoint(centerX, centerY);
+  }
+
   /// 获取最外层矩形
   Rect toOuterRect() {
     double minX = [topLeft.x, topRight.x, bottomLeft.x, bottomRight.x].reduce((a, b) => a < b ? a : b);

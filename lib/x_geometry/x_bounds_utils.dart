@@ -9,23 +9,23 @@ import '../x_quad/x_quad.dart';
 class XBoundsUtils {
   /// 根据四边形计算的包围盒
   ///   - 以上边线为基准计算的
-  static XQuad getAxisAlignedBox(XQuad points) {
-    final topLeft = points.topLeft;
-    final topRight = points.topLeft;
-    final bottomRight = points.bottomRight;
-    final bottomLeft = points.bottomLeft;
+  static XQuad getAxisAlignedBox(XQuad quad) {
+    final topLeft = quad.topLeft.toOffset();
+    final topRight = quad.topRight.toOffset();
+    final bottomRight = quad.bottomRight.toOffset();
+    final bottomLeft = quad.bottomLeft.toOffset();
 
     // 上边线角度
-    final angle = XGeometryUtils.angleBetweenPoints(topLeft.toOffset(), topRight.toOffset());
+    final angle = XGeometryUtils.angleBetweenPoints(topLeft, topRight);
 
     final cosA = cos(-angle);
     final sinA = sin(-angle);
 
     // 将点绕 topLeft 旋转到水平
-    XPoint rotateToHorizontal(XPoint p) {
-      final dx = p.x - topLeft.x;
-      final dy = p.y - topLeft.y;
-      return XPoint(dx * cosA - dy * sinA, dx * sinA + dy * cosA);
+    Offset rotateToHorizontal(Offset p) {
+      final dx = p.dx - topLeft.dx;
+      final dy = p.dy - topLeft.dy;
+      return Offset(dx * cosA - dy * sinA, dx * sinA + dy * cosA);
     }
 
     final rTopLeft = rotateToHorizontal(topLeft);
@@ -34,26 +34,26 @@ class XBoundsUtils {
     final rBottomLeft = rotateToHorizontal(bottomLeft);
 
     // 水平轴对齐的矩形边界
-    final minX = [rTopLeft.x, rBottomLeft.x].reduce(min);
-    final maxX = [rTopRight.x, rBottomRight.x].reduce(max);
-    final minY = [rTopLeft.y, rTopRight.y].reduce(min);
-    final maxY = [rBottomLeft.y, rBottomRight.y].reduce(max);
+    final minX = [rTopLeft.dx, rBottomLeft.dx].reduce(min);
+    final maxX = [rTopRight.dx, rBottomRight.dx].reduce(max);
+    final minY = [rTopLeft.dy, rTopRight.dy].reduce(min);
+    final maxY = [rBottomLeft.dy, rBottomRight.dy].reduce(max);
 
     // 旋转回原角度
     final cosB = cos(angle);
     final sinB = sin(angle);
 
-    XPoint rotateBack(double x, double y) {
-      final px = x * cosB - y * sinB + topLeft.x;
-      final py = x * sinB + y * cosB + topLeft.y;
-      return XPoint(px, py);
+    Offset rotateBack(double x, double y) {
+      final px = x * cosB - y * sinB + topLeft.dx;
+      final py = x * sinB + y * cosB + topLeft.dy;
+      return Offset(px, py);
     }
 
     return XQuad(
-      topLeft: rotateBack(minX, minY),
-      bottomLeft: rotateBack(maxX, minY),
-      topRight: rotateBack(maxX, maxY),
-      bottomRight: rotateBack(minX, maxY), //
+      topLeft: rotateBack(minX, minY).toPoint(),
+      topRight: rotateBack(maxX, minY).toPoint(),
+      bottomRight: rotateBack(maxX, maxY).toPoint(),
+      bottomLeft: rotateBack(minX, maxY).toPoint(), //
     );
   }
 

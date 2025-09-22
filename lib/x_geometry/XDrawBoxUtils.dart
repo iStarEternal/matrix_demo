@@ -8,59 +8,6 @@ import '../x_quad/x_point.dart';
 class XDrawBoxUtils {
   XDrawBoxUtils._();
 
-  /// 根据四个点计算轴对齐的包围盒
-  /// points = [topLeft, topRight, bottomRight, bottomLeft]
-  /// 返回 [topLeft, topRight, bottomRight, bottomLeft] 四个点
-  static List<Offset> getAxisAlignedBox(List<Offset> points) {
-    if (points.length != 4) return [];
-
-    final topLeft = points[0];
-    final topRight = points[1];
-    final bottomRight = points[2];
-    final bottomLeft = points[3];
-
-    // 上边线角度
-    final angle = XGeometryUtils.angleBetweenPoints(topLeft, topRight);
-
-    final cosA = cos(-angle);
-    final sinA = sin(-angle);
-
-    // 将点绕 topLeft 旋转到水平
-    Offset rotateToHorizontal(Offset p) {
-      final dx = p.dx - topLeft.dx;
-      final dy = p.dy - topLeft.dy;
-      return Offset(dx * cosA - dy * sinA, dx * sinA + dy * cosA);
-    }
-
-    final rTopLeft = rotateToHorizontal(topLeft);
-    final rTopRight = rotateToHorizontal(topRight);
-    final rBottomRight = rotateToHorizontal(bottomRight);
-    final rBottomLeft = rotateToHorizontal(bottomLeft);
-
-    // 水平轴对齐的矩形边界
-    final minX = [rTopLeft.dx, rBottomLeft.dx].reduce(min);
-    final maxX = [rTopRight.dx, rBottomRight.dx].reduce(max);
-    final minY = [rTopLeft.dy, rTopRight.dy].reduce(min);
-    final maxY = [rBottomLeft.dy, rBottomRight.dy].reduce(max);
-
-    // 旋转回原角度
-    final cosB = cos(angle);
-    final sinB = sin(angle);
-
-    Offset rotateBack(double x, double y) {
-      final px = x * cosB - y * sinB + topLeft.dx;
-      final py = x * sinB + y * cosB + topLeft.dy;
-      return Offset(px, py);
-    }
-
-    return [
-      rotateBack(minX, minY), // topLeft
-      rotateBack(maxX, minY), // topRight
-      rotateBack(maxX, maxY), // bottomRight
-      rotateBack(minX, maxY), // bottomLeft
-    ];
-  }
-
   /// 将四个点绕指定中心旋转指定角度
   /// angle: 弧度
   /// center: 可选旋转中心，默认使用四点中心
