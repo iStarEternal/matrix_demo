@@ -6,6 +6,7 @@ import 'package:matrix_demo/x_geometry/x_geometry_utils.dart';
 import '../x_quad/x_point.dart';
 import '../x_quad/x_quad.dart';
 
+/// 包围盒子
 class XBoundsUtils {
   /// 根据四边形计算的包围盒
   ///   - 以上边线为基准计算的

@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import '../x_quad/x_point.dart';
 
+/// 几何
 class XGeometryUtils {
   XGeometryUtils._();
 
@@ -36,8 +37,8 @@ class XGeometryUtils {
   }
 
   /// 缩放
-  static XPoint scale(XPoint point, double scaleX, double scaleY, Offset center) {
-    return XPoint((point.x - center.dx) * scaleX + center.dx, (point.y - center.dy) * scaleY + center.dy);
+  static XPoint scale(XPoint point, double scaleX, double scaleY, XPoint center) {
+    return XPoint((point.x - center.x) * scaleX + center.x, (point.y - center.y) * scaleY + center.y);
   }
 
   /// 将指定点绕中心旋转 旋转点的方法

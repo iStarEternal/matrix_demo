@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:matrix_demo/x_quad/x_point.dart';
 import 'package:matrix_demo/x_quad/x_quad.dart';
 
-import 'TestConfig.dart';
+import 'test_config.dart';
 import 'affine_painter.dart';
-import 'debug_print.dart';
+import 'debug_test.dart';
 
 class AffineDemoPage extends StatefulWidget {
   const AffineDemoPage({super.key});
@@ -36,6 +36,12 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
     quadB = result.$2;
   }
 
+  void resetToZero() {
+    final result = TestConfig.test1();
+    quadA = result.$1;
+    quadB = result.$1.copy();
+  }
+
   @override
   Widget build(BuildContext context) {
     final rect = quadB.toOuterRect();
@@ -63,8 +69,10 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
               left: 16,
               bottom: 16,
               child: Row(
+                spacing: 12,
                 children: [
-                  _resetButon(), //
+                  _resetToInitialButon(), //
+                  _resetToZeroButon(), //
                 ],
               ),
             ),
@@ -107,7 +115,7 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
     final double gap = 40;
     return [
       // 上 - 旋转
-      Positioned(left: center.dx - handleSize / 2, top: rect.top - gap, child: _rotationHandle(center)),
+      Positioned(left: center.dx - handleSize / 2, top: rect.top - gap - 80, child: _rotationHandle(center)),
       // X 缩放
       Positioned(left: rect.right + gap - handleSize / 2, top: center.dy - handleSize / 2 - 20, child: _scaleXHandle(center)),
       // Y 缩放
@@ -141,10 +149,10 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
       onPanUpdate: (details) {
         final scaleX = 1 + details.delta.dx / 100;
         setState(() {
-          quadB = quadB.scale(scaleX, 1.0, center);
+          quadB = quadB.scale(scaleX, 1.0, center.toPoint());
         });
       },
-      child: _handle("scaleX"),
+      child: _handle("缩放宽"),
     );
   }
 
@@ -154,10 +162,10 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
       onPanUpdate: (details) {
         final scaleY = 1 + details.delta.dy / 100;
         setState(() {
-          quadB = quadB.scale(1.0, scaleY, center);
+          quadB = quadB.scale(1.0, scaleY, center.toPoint());
         });
       },
-      child: _handle("scaleY"),
+      child: _handle("缩放高"),
     );
   }
 
@@ -209,13 +217,23 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
     );
   }
 
-  Widget _resetButon() {
+  Widget _resetToInitialButon() {
     return ElevatedButton(
       onPressed: () {
         resetQuads();
         setState(() {});
       },
-      child: Text("重置"),
+      child: Text("初始化"),
+    );
+  }
+
+  Widget _resetToZeroButon() {
+    return ElevatedButton(
+      onPressed: () {
+        resetToZero();
+        setState(() {});
+      },
+      child: Text("归零"),
     );
   }
 }

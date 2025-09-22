@@ -12,7 +12,7 @@ extension XQuadExtTransform on XQuad {
   }
 
   /// 缩放
-  XQuad scale(double scaleX, double scaleY, Offset center) {
+  XQuad scale(double scaleX, double scaleY, XPoint center) {
     return XQuad(
       topLeft: XGeometryUtils.scale(topLeft, scaleX, scaleY, center),
       bottomLeft: XGeometryUtils.scale(bottomLeft, scaleX, scaleY, center),

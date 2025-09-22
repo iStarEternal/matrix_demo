@@ -44,6 +44,10 @@ final class XQuad {
     );
   }
 
+  XQuad copy() {
+    return XQuad(topLeft: topLeft, topRight: topRight, bottomRight: bottomRight, bottomLeft: bottomLeft);
+  }
+
   @override
   String toString() {
     return toPoints().toString();

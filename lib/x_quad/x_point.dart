@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 /// XPoint
-class XPoint {
+final class XPoint {
   final double x;
   final double y;
 

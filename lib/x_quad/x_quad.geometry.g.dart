@@ -22,5 +22,4 @@ extension XQuadExtGeometry1 on XQuad {
     double maxY = [topLeft.y, topRight.y, bottomLeft.y, bottomRight.y].reduce((a, b) => a > b ? a : b);
     return Rect.fromLTRB(minX, minY, maxX, maxY);
   }
-
 }

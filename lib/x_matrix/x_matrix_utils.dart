@@ -127,5 +127,4 @@ class XMatrixUtils {
 
     return x; // 返回解向量
   }
-
 }
