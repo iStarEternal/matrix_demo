@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:vector_math/vector_math_64.dart' as vm;
@@ -33,7 +32,24 @@ class XMatrixUtils {
       [h[6], h[7], 0, 1],
     ];
 
-    return vm.Matrix4.fromList([H[0][0], H[1][0], H[2][0], H[3][0], H[0][1], H[1][1], H[2][1], H[3][1], H[0][2], H[1][2], H[2][2], H[3][2], H[0][3], H[1][3], H[2][3], H[3][3]]);
+    return vm.Matrix4.fromList([
+      H[0][0],
+      H[1][0],
+      H[2][0],
+      H[3][0],
+      H[0][1],
+      H[1][1],
+      H[2][1],
+      H[3][1],
+      H[0][2],
+      H[1][2],
+      H[2][2],
+      H[3][2],
+      H[0][3],
+      H[1][3],
+      H[2][3],
+      H[3][3],
+    ]);
   }
 
   /// 逆透视变化，通过from4Point和matrix，得到to4Points

@@ -87,7 +87,6 @@ class AffinePainter extends CustomPainter {
     canvas.drawPath(bBoxPath, paint);
   }
 
-
   /// 绘制 B 的 AABB 包围盒
   void _drawAABBBoundingBox(Canvas canvas, XQuad quad) {
     final bBoxPath = PathMaker.makeBoundingBox_aabb(quad);
@@ -98,7 +97,6 @@ class AffinePainter extends CustomPainter {
       ..isAntiAlias = true;
     canvas.drawPath(bBoxPath, paint);
   }
-
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;

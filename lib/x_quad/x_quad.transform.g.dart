@@ -12,7 +12,13 @@ extension XQuadExtTransform on XQuad {
   }
 
   /// 平移（可选修改部分点）
-  XQuad translatePartial(XPoint offset, {bool changeTopLeft = false, bool changeTopRight = false, bool changeBottomRight = false, bool changeBottomLeft = false}) {
+  XQuad translatePartial(
+    XPoint offset, {
+    bool changeTopLeft = false,
+    bool changeTopRight = false,
+    bool changeBottomRight = false,
+    bool changeBottomLeft = false,
+  }) {
     return XQuad(
       topLeft: changeTopLeft ? XGeometryUtils.translate(topLeft, offset) : topLeft,
       topRight: changeTopRight ? XGeometryUtils.translate(topRight, offset) : topRight,

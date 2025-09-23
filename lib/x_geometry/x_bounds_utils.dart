@@ -126,7 +126,12 @@ class XBoundsUtils_Points {
           return XPoint(px, py);
         }
 
-        bestQuad = XQuad(topLeft: rotateBack(minX, minY), topRight: rotateBack(maxX, minY), bottomRight: rotateBack(maxX, maxY), bottomLeft: rotateBack(minX, maxY));
+        bestQuad = XQuad(
+          topLeft: rotateBack(minX, minY),
+          topRight: rotateBack(maxX, minY),
+          bottomRight: rotateBack(maxX, maxY),
+          bottomLeft: rotateBack(minX, maxY),
+        );
       }
     }
 

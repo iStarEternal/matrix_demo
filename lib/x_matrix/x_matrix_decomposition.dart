@@ -148,5 +148,3 @@ extension Dep on XMatrixDecomposition {
     return skew * scale * rot * trans;
   }
 }
-
-_test() {}

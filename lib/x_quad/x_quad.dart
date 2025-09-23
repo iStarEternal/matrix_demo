@@ -19,9 +19,7 @@ final class XQuad {
   final XPoint bottomRight;
   final XPoint bottomLeft;
 
-  XQuad({required this.topLeft, required this.topRight, required this.bottomRight, required this.bottomLeft}) {
-    // TODO: 思考是否在此处计算Matrix
-  }
+  XQuad({required this.topLeft, required this.topRight, required this.bottomRight, required this.bottomLeft});
 
   factory XQuad.fromRect(Rect fromRect) {
     return XQuad(
