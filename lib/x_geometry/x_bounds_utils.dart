@@ -59,9 +59,9 @@ class XBoundsUtils {
   }
 
   /// 计算最小的轴对齐矩形盒子 (AABB)
-  static Rect getBoundingRect(XQuad points) {
-    final xs = [points.topLeft.x, points.topRight.x, points.bottomLeft.x, points.bottomRight.x];
-    final ys = [points.topLeft.y, points.topRight.y, points.bottomLeft.y, points.bottomRight.y];
+  static Rect getBoundingRect(XQuad quad) {
+    final xs = [quad.topLeft.x, quad.topRight.x, quad.bottomLeft.x, quad.bottomRight.x];
+    final ys = [quad.topLeft.y, quad.topRight.y, quad.bottomLeft.y, quad.bottomRight.y];
 
     final minX = xs.reduce(min);
     final maxX = xs.reduce(max);

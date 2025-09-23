@@ -42,10 +42,10 @@ extension XQuadExtTransform on XQuad {
   XQuad rotate(double radian, {XPoint? center}) {
     final currentCenter = center ?? this.center();
     return XQuad(
-      topLeft: XGeometryUtils.rotate(topLeft, currentCenter, radian),
-      topRight: XGeometryUtils.rotate(topRight, currentCenter, radian),
-      bottomRight: XGeometryUtils.rotate(bottomRight, currentCenter, radian),
-      bottomLeft: XGeometryUtils.rotate(bottomLeft, currentCenter, radian),
+      topLeft: XGeometryUtils.rotate(topLeft, radian, currentCenter),
+      topRight: XGeometryUtils.rotate(topRight, radian, currentCenter),
+      bottomRight: XGeometryUtils.rotate(bottomRight, radian, currentCenter),
+      bottomLeft: XGeometryUtils.rotate(bottomLeft, radian, currentCenter),
     );
   }
 

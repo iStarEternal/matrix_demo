@@ -42,8 +42,7 @@ class XGeometryUtils {
   }
 
   /// 将指定点绕中心旋转 旋转点的方法
-  static XPoint rotate(XPoint point, XPoint center, double radian) {
-    // double radian = angle * (pi / 180); // 将角度转换为弧度
+  static XPoint rotate(XPoint point, double radian, XPoint center) {
     double cosAngle = cos(radian);
     double sinAngle = sin(radian);
 
