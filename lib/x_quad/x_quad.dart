@@ -14,12 +14,14 @@ part 'x_quad.transform.g.dart';
 /// XQuadrilateral
 /// XQuadrangle
 final class XQuad {
-  XPoint topLeft;
-  XPoint topRight;
-  XPoint bottomRight;
-  XPoint bottomLeft;
+  final XPoint topLeft;
+  final XPoint topRight;
+  final XPoint bottomRight;
+  final XPoint bottomLeft;
 
-  XQuad({required this.topLeft, required this.topRight, required this.bottomRight, required this.bottomLeft});
+  XQuad({required this.topLeft, required this.topRight, required this.bottomRight, required this.bottomLeft}) {
+    // TODO: 思考是否在此处计算Matrix
+  }
 
   factory XQuad.fromRect(Rect fromRect) {
     return XQuad(
@@ -44,13 +46,26 @@ final class XQuad {
     );
   }
 
+  @override
+  String toString() {
+    return toPoints().toString();
+  }
+}
+
+extension XQuadExtCopy on XQuad {
   XQuad copy() {
     return XQuad(topLeft: topLeft, topRight: topRight, bottomRight: bottomRight, bottomLeft: bottomLeft);
   }
 
-  @override
-  String toString() {
-    return toPoints().toString();
+  /// 复制
+  /// 顺序：0 -> 1 ↓ 2 ← 3
+  XQuad copyWith({XPoint? topLeft, XPoint? topRight, XPoint? bottomRight, XPoint? bottomLeft}) {
+    return XQuad(
+      topLeft: topLeft ?? this.topLeft,
+      topRight: topRight ?? this.topRight,
+      bottomRight: bottomRight ?? this.bottomRight,
+      bottomLeft: bottomLeft ?? this.bottomLeft, //
+    );
   }
 }
 
@@ -64,20 +79,22 @@ extension XQuadSetter on XQuad {
 
   List<Offset> toOffsets() => toPoints().map((p) => p.toOffset()).toList();
 
-  void setPoint(int index, XPoint value) {
+  /// 替换指定 index 的点（返回新 Quad，不会修改原对象）
+  /// 0 → 1
+  /// ↑   ↓
+  /// 3 ← 2
+  XQuad updatePoint(int index, XPoint value) {
     switch (index) {
       case 0:
-        topLeft = value;
-        break;
+        return copyWith(topLeft: value);
       case 1:
-        topRight = value;
-        break;
+        return copyWith(topRight: value);
       case 2:
-        bottomRight = value;
-        break;
+        return copyWith(bottomRight: value);
       case 3:
-        bottomLeft = value;
-        break;
+        return copyWith(bottomLeft: value);
+      default:
+        throw ArgumentError('index 必须是 0~3，当前=$index');
     }
   }
 }

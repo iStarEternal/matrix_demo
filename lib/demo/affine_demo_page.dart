@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:matrix_demo/x_quad/x_point.dart';
 import 'package:matrix_demo/x_quad/x_quad.dart';
 
-import 'test_config.dart';
 import 'affine_painter.dart';
 import 'debug_test.dart';
+import 'test_config.dart';
 
 class AffineDemoPage extends StatefulWidget {
   const AffineDemoPage({super.key});
@@ -97,7 +97,7 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
         child: GestureDetector(
           onPanUpdate: (details) {
             setState(() {
-              quadB.setPoint(i, quadB.toPoints()[i] + details.delta);
+              quadB = quadB.updatePoint(i, quadB.toPoints()[i] + details.delta);
             });
           },
           child: Container(
@@ -135,7 +135,7 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
         final currentAngle = _calculateAngle(center, details.globalPosition);
         final delta = currentAngle - _lastRotationAngle;
         setState(() {
-          quadB = quadB.rotate(quadB.center(), delta);
+          quadB = quadB.rotate(delta, center: quadB.center());
         });
         _lastRotationAngle = currentAngle;
       },
@@ -149,7 +149,7 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
       onPanUpdate: (details) {
         final scaleX = 1 + details.delta.dx / 100;
         setState(() {
-          quadB = quadB.scale(scaleX, 1.0, center.toPoint());
+          quadB = quadB.scale(scaleX, 1.0, center: center.toPoint());
         });
       },
       child: _handle("缩放宽"),
@@ -162,7 +162,7 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
       onPanUpdate: (details) {
         final scaleY = 1 + details.delta.dy / 100;
         setState(() {
-          quadB = quadB.scale(1.0, scaleY, center.toPoint());
+          quadB = quadB.scale(1.0, scaleY, center: center.toPoint());
         });
       },
       child: _handle("缩放高"),
