@@ -6,7 +6,7 @@ import 'package:vector_math/vector_math_64.dart' as vm;
 // 参考：https://franklinta.com/2014/09/08/computing-css-matrix3d-transforms/
 
 class XMatrixUtils {
-  /// 仿射变化，通过from4Point，和to4Points，得到矩阵
+  /// 透视变化，通过from4Point，和to4Points，得到矩阵
   static vm.Matrix4 getMatrix4(List<Offset> from, List<Offset> to) {
     assert(from.length == 4 && to.length == 4);
 
@@ -53,7 +53,7 @@ class XMatrixUtils {
     ]);
   }
 
-  /// 逆仿射变化，通过from4Point和matrix，得到to4Points
+  /// 逆透视变化，通过from4Point和matrix，得到to4Points
   static List<Offset> getToPoints(List<Offset> fromPoints, vm.Matrix4 matrix) {
     List<Offset> toPoints = [];
     for (Offset point in fromPoints) {
