@@ -26,20 +26,24 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
   @override
   void initState() {
     super.initState();
-    resetQuads();
+    resetTest2();
   }
 
-  /// 重置四边形
-  void resetQuads() {
+  void resetToZero() {
+    quadA = XQuad.fromRect(Rect.fromLTWH(0, 0, 100, 100));
+    quadB = quadA.copy();
+  }
+
+  void resetTest1() {
     final result = TestConfig.test1();
     quadA = result.$1;
     quadB = result.$2;
   }
 
-  void resetToZero() {
-    final result = TestConfig.test1();
+  void resetTest2() {
+    final result = TestConfig.test2();
     quadA = result.$1;
-    quadB = result.$1.copy();
+    quadB = result.$2;
   }
 
   @override
@@ -71,8 +75,27 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
               child: Row(
                 spacing: 12,
                 children: [
-                  _resetToInitialButon(), //
-                  _resetToZeroButon(), //
+                  ElevatedButton(
+                    onPressed: () {
+                      resetToZero();
+                      setState(() {});
+                    },
+                    child: Text("初始化"),
+                  ), //
+                  ElevatedButton(
+                    onPressed: () {
+                      resetTest1();
+                      setState(() {});
+                    },
+                    child: Text("test1()"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      resetTest2();
+                      setState(() {});
+                    },
+                    child: Text("test2()"),
+                  ),
                 ],
               ),
             ),
@@ -203,6 +226,7 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
   Widget _buildLogWidget() {
     final offsetsA = quadA.toOffsets();
     final offsetsB = quadB.toOffsets();
+    final logStr = logText(offsetsA, offsetsB);
     return Positioned(
       right: 10,
       top: 10,
@@ -211,29 +235,9 @@ class _AffineDemoPageState extends State<AffineDemoPage> {
         width: 500,
         color: Colors.white.withOpacity(0.7),
         child: SingleChildScrollView(
-          child: Text(logText(offsetsA, offsetsB), style: const TextStyle(fontSize: 12, color: Colors.black)),
+          child: Text("像素单位\n${logStr}", style: const TextStyle(fontSize: 12, color: Colors.black)),
         ),
       ),
-    );
-  }
-
-  Widget _resetToInitialButon() {
-    return ElevatedButton(
-      onPressed: () {
-        resetQuads();
-        setState(() {});
-      },
-      child: Text("初始化"),
-    );
-  }
-
-  Widget _resetToZeroButon() {
-    return ElevatedButton(
-      onPressed: () {
-        resetToZero();
-        setState(() {});
-      },
-      child: Text("归零"),
     );
   }
 }

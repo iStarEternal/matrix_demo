@@ -12,4 +12,17 @@ extension XQuadExtMatrix on XQuad {
   Matrix4 toMatrixWithRect(Rect fromRect) {
     return toMatrix(XQuad.fromRect(fromRect));
   }
+
+  XQuad applyMatrix(Matrix4 matrix) {
+    final toTopLeft = matrix.transform(Vector4(topLeft.x, topLeft.y, 0.0, 1.0));
+    final toTopRight = matrix.transform(Vector4(topRight.x, topRight.y, 0.0, 1.0));
+    final toBottomRight = matrix.transform(Vector4(bottomRight.x, bottomRight.y, 0.0, 1.0));
+    final toBottomLeft = matrix.transform(Vector4(bottomLeft.x, bottomLeft.y, 0.0, 1.0));
+    return XQuad(
+      topLeft: XPoint(toTopLeft.x, toTopLeft.y),
+      topRight: XPoint(toTopRight.x, toTopRight.y),
+      bottomRight: XPoint(toBottomRight.x, toBottomRight.y),
+      bottomLeft: XPoint(toBottomLeft.x, toBottomLeft.y),
+    );
+  }
 }

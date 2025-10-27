@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:matrix_demo/x_matrix/x_matrix_decomposition.dart';
 import 'package:matrix_demo/x_quad/x_point.dart';
 import 'package:matrix_demo/x_quad/x_quad.dart';
 
@@ -19,36 +20,35 @@ class TestConfig {
   }
 
   static (XQuad from, XQuad to) test2() {
-    var from = [
-      {"x": 0.0, "y": 0.0},
-      {"x": 522.0, "y": 0.0},
-      {"x": 522.0, "y": 172.0},
-      {"x": 0.0, "y": 172.0},
-    ];
+    // final qrd = XQRDecomposition2D(
+    //   translationX: 290.827353,
+    //   translationY: 100.8906555,
+    //   rotation: XGeometryUtils.degreeToRadian(119.75867),
+    //   scaleX: 2.0750246,
+    //   scaleY: 0.83275247,
+    //   skewX: XGeometryUtils.degreeToRadian(20.551098),
+    //   skewY: 0,
+    // );
+    final qrdBefore = XQRDecomposition2D(
+      translationX: 290.827353,
+      translationY: 100.8906555,
+      radians: 2.0901830993093573,
+      scaleX: 2.0750246,
+      scaleY: 0.83275247,
+      flipX: false,
+      flipY: false,
+      skewX: 0.35868432500002156,
+      skewY: 0,
+    );
 
-    var to = [
-      {"x": 0.0, "y": 0.0},
-      {"x": 522.0, "y": 0.0},
-      {"x": 322.0, "y": 101.0},
-      {"x": 0.0, "y": 172.0},
-    ];
+    print("before: ${qrdBefore}");
+    final matrix = XMatrixDecomposition.composeFromQR(qrdBefore);
+    final qrdAfter = XMatrixDecomposition.decomposeQR(matrix);
+    print("after:  ${qrdAfter}");
+    final fromQ = XQuad.fromRect(Rect.fromLTWH(0, 0, 100, 100));
+    final toQ = fromQ.applyMatrix(matrix);
 
-    List<List<double>> H = [
-      [3.022814103263835, 0, 0, 0],
-      [0, 2.8775242877415126, 0, 0],
-      [0, 0, 1, 0],
-      [0.003875122803187424, 0.010915838882218098, 0, 1],
-    ];
-
-    final quadFrom = _jsonToQuad(from);
-    final quadTo = _jsonToQuad(to);
-
-    return (quadFrom, quadTo);
-  }
-
-  static XQuad _jsonToQuad(List<Map<String, double>> json) {
-    final val = json.map((item) => XPoint(item['x'] as double, item['y'] as double)).toList();
-    return XQuad(topLeft: val[0], topRight: val[1], bottomRight: val[2], bottomLeft: val[3]);
+    return (fromQ, toQ);
   }
 
   static XQuad _offsetsToQuad(List<Offset> val) {

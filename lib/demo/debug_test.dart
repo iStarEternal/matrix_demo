@@ -47,9 +47,12 @@ String logText(List<Offset> A, List<Offset> B) {
   matrixText.writeln("QR分解结果:");
   matrixText.writeln("  translationX = ${qrResult.translationX}");
   matrixText.writeln("  translationY = ${qrResult.translationY}");
-  matrixText.writeln("  rotation = ${qrResult.rotation * 180 / pi}°");
+  matrixText.writeln("  rotation_radians = ${qrResult.radians}");
+  matrixText.writeln("  rotation_degree = ${qrResult.radians * 180 / pi}°");
   matrixText.writeln("  scaleX = ${qrResult.scaleX}");
   matrixText.writeln("  scaleY = ${qrResult.scaleY}");
+  matrixText.writeln("  flipX = ${qrResult.flipX}");
+  matrixText.writeln("  flipY = ${qrResult.flipY}");
   matrixText.writeln("  skewX = ${qrResult.skewX}");
   matrixText.writeln("  skewY = ${qrResult.skewY}");
   matrixText.writeln("");
@@ -94,7 +97,7 @@ String logText(List<Offset> A, List<Offset> B) {
   // matrixText.writeln("  skew = ${full['skew']}");
   // matrixText.writeln("  perspective = ${full['perspective']}");
 
-  print(matrixText.toString());
+  // print(matrixText.toString());
 
   return matrixText.toString();
 }
