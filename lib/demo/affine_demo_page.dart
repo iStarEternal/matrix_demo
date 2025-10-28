@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:matrix_demo/x_quad/x_point.dart';
-import 'package:matrix_demo/x_quad/x_quad.dart';
+import 'package:x_quad/x_quad.dart';
 
 import 'affine_painter.dart';
 import 'debug_test.dart';

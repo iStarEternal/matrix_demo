@@ -1,14 +1,10 @@
-// You have generated a new plugin project without specifying the `--platforms`
-// flag. A plugin project with no platform support was generated. To add a
-// platform, run `flutter create -t plugin --platforms <platforms> .` under the
-// same directory. You can also find a detailed instruction on how to add
-// platforms in the `pubspec.yaml` at
-// https://flutter.dev/to/pubspec-plugin-platforms.
+// export 'package:vector_math/vector_math_64.dart' show Matrix2, Matrix3, Matrix4, Vector, Vector2, Vector3, Vector4;
 
-import 'x_quad_platform_interface.dart';
-
-class XQuad {
-  Future<String?> getPlatformVersion() {
-    return XQuadPlatform.instance.getPlatformVersion();
-  }
-}
+export 'src/x_geometry/x_bounds_utils.dart';
+export 'src/x_geometry/x_geometry_utils.dart';
+export 'src/x_matrix/matrix_4_ext.dart';
+export 'src/x_matrix/x_matrix_decomposition.dart';
+export 'src/x_matrix/x_matrix_utils.dart';
+export 'src/x_matrix/x_qr_decomposition_2d.dart';
+export 'src/x_quad/x_point.dart';
+export 'src/x_quad/x_quad.dart';

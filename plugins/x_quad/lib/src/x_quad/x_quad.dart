@@ -1,14 +1,14 @@
 import 'dart:ui';
 
-import 'package:matrix_demo/x_matrix/x_matrix_utils.dart';
 import 'package:vector_math/vector_math_64.dart';
+import 'package:x_quad/src/x_matrix/x_matrix_utils.dart';
 
 import '../x_geometry/x_geometry_utils.dart';
 import 'x_point.dart';
 
-part 'x_quad.geometry.g.dart';
-part 'x_quad.matrix.g.dart';
-part 'x_quad.transform.g.dart';
+part 'x_quad.geometry.part.dart';
+part 'x_quad.matrix.part.dart';
+part 'x_quad.transform.part.dart';
 
 /// 四边形
 /// XQuadrilateral

@@ -1,9 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:matrix_demo/x_geometry/x_bounds_utils.dart';
-
-import '../x_quad/x_quad.dart';
+import 'package:x_quad/x_quad.dart';
 
 /// Path 工具
 class PathMaker {

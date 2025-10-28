@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:matrix_demo/demo/path_maker.dart';
-import 'package:matrix_demo/x_matrix/x_matrix_utils.dart';
-import 'package:matrix_demo/x_quad/x_quad.dart';
+import 'package:x_quad/x_quad.dart';
 
 class AffinePainter extends CustomPainter {
   final XQuad quadA;

@@ -2,10 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart' as vm;
-
-import '../x_geometry/x_geometry_utils.dart';
-import '../x_matrix/x_matrix_decomposition.dart';
-import '../x_matrix/x_matrix_utils.dart';
+import 'package:x_quad/x_quad.dart';
 
 /// 打印 Matrix4 的一行一行文本（返回 String）
 String matrix4ToString(vm.Matrix4 m) {

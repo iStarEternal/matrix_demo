@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart' as vm;
-import 'package:matrix_demo/x_matrix/x_matrix_decomposition.dart';
+import 'package:x_quad/src/x_matrix/x_qr_decomposition_2d.dart';
 
 /*
    * Matrix4 4x4 结构（列主序，Flutter / vector_math 约定）：

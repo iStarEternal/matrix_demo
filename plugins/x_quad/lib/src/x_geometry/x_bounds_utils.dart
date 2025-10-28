@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:matrix_demo/x_geometry/x_geometry_utils.dart';
+import 'package:x_quad/src/x_geometry/x_geometry_utils.dart';
 
 import '../x_quad/x_point.dart';
 import '../x_quad/x_quad.dart';

@@ -1,8 +1,6 @@
 import 'dart:ui';
 
-import 'package:matrix_demo/x_matrix/x_matrix_decomposition.dart';
-import 'package:matrix_demo/x_quad/x_point.dart';
-import 'package:matrix_demo/x_quad/x_quad.dart';
+import 'package:x_quad/x_quad.dart';
 
 class TestConfig {
   static (XQuad from, XQuad to) test1() {

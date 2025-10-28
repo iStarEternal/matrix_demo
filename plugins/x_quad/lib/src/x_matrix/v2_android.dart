@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart' as vm;
-import 'package:matrix_demo/x_matrix/matrix_4_ext.dart';
-import 'package:matrix_demo/x_matrix/x_matrix_decomposition.dart';
+import 'package:x_quad/src/x_matrix/matrix_4_ext.dart';
+import 'package:x_quad/src/x_matrix/x_qr_decomposition_2d.dart';
 
 /// 取自安卓的算法
 abstract class XMatrixDecompositionAndroid {

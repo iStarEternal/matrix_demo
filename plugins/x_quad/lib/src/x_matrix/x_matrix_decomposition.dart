@@ -1,9 +1,7 @@
-import 'package:matrix_demo/x_matrix/v2_android.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;
+import 'package:x_quad/src/x_matrix/v2_android.dart';
 
 import 'x_qr_decomposition_2d.dart';
-
-export 'x_qr_decomposition_2d.dart';
 
 class XMatrixDecomposition {
   XMatrixDecomposition._();
